@@ -1,7 +1,9 @@
-﻿using System;
+﻿using n_net_poker;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace nn2
@@ -10,19 +12,32 @@ namespace nn2
     {
         static void Main(string[] args)
         {
-            var rand = new Random();
 
-            neuralNetwork test_network = new neuralNetwork(5, 10);
+            //used to test the feed forward capabilities
+            int layers = 5;
+            int indexes_per_layer = 10;
 
-            for (int layers = 0; layers < 5; layers++)
+
+            utils u = new utils();
+            neuralNetwork new_n = new neuralNetwork(layers, indexes_per_layer);
+
+            for(int a = 0; a < layers; a++)
             {
-                for (int index = 0; index < 10; index++)
+                for (int b = 0; b < indexes_per_layer; b++)
                 {
-                    node n = new node(rand.NextDouble(), rand.NextDouble(), rand.NextDouble());
+                    node dummy = new node(u.returnRandomDouble(10), u.returnRandomDouble(10), u.returnRandomDouble(10));
 
-                    test_network.addNode(layers, index, n);
+                    new_n.addNode(a, b, dummy);
                 }
             }
+
+            new_n.printNetwork();
+
+            new_n.feedForward();
+
+            new_n.printNetwork();
+
+            Console.ReadLine();
         }
     }
 }
